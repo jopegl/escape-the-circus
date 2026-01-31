@@ -6,5 +6,6 @@ class Level1(Level):
         super().__init__(player)
         
         self.walls = [
-            pygame.Rect(200, 200, 300, 20),
+            pygame.Rect(100, 100, 600, 20),
+
         ]

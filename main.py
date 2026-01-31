@@ -11,7 +11,7 @@ CLOCK = pygame.time.Clock()
 
 running = True
 
-player = Player(100,100)
+player = Player(100,50)
 level = Level1(player)
 
 while running:
