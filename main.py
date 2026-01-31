@@ -3,6 +3,7 @@ import sys
 from settings import *
 from player import Player
 from levels.level1 import Level1
+from levels.level2 import Level2
 pygame.init()
 
 SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -20,6 +21,16 @@ while running:
             running = False
 
     level.update()
+    if player.proxima_fase:
+        if player.proxima_fase == "fase2 - 1":
+            level = Level2(player)
+            player.rect.topleft = (100, 100) 
+        elif player.proxima_fase == "fase1":
+            level = Level1(player)
+        elif player.proxima_fase == "fase3 - 1":
+            pass
+        player.proxima_fase = None
+
     level.draw(SCREEN)
 
     pygame.display.flip()

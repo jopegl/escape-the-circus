@@ -46,7 +46,7 @@ class Level1(Level):
             # Porta / saída (parte de baixo – maleta)
             {
                 "rect": pygame.Rect(WIDTH - 90, 360, 120, 140),
-                "tipo": "porta1",
+                "tipo": "fase2 - 1",
                 "categoria": "porta"
             },
         ]

@@ -12,6 +12,7 @@ class Player:
             "mizu": False
         }
         self.mascara_equipada = None
+        self.proxima_fase = None
     
     def update(self, walls, interacoes):
         keys = pygame.key.get_pressed()
@@ -67,7 +68,9 @@ class Player:
                             print("Você abriu o armário!")
                             interacoes.remove(zona)
                 elif zona.get("categoria") == "porta":
+                    self.proxima_fase = zona["tipo"]
                     print(f"Entrando na {zona['tipo']}...")
+
 
                 
 
