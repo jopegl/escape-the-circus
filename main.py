@@ -12,7 +12,7 @@ CLOCK = pygame.time.Clock()
 
 running = True
 
-player = Player(WIDTH/2,WIDTH/2)
+player = Player(0,HEIGHT/2)
 level = Level1(player)
 
 while running:
@@ -24,7 +24,7 @@ while running:
     if player.proxima_fase:
         if player.proxima_fase == "fase2 - 1":
             level = Level2(player)
-            player.rect.topleft = (100, 100) 
+            player.rect.topleft = (0, HEIGHT//2) 
         elif player.proxima_fase == "fase1":
             level = Level1(player)
         elif player.proxima_fase == "fase3 - 1":

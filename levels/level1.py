@@ -7,9 +7,9 @@ class Level1(Level):
     def __init__(self, player):
         super().__init__(player)
 
-        bg_path = os.path.join('assets', 'backgrounds', 'BACKGROUND1MASK.png')
+        bg_path = os.path.join('assets', 'backgrounds','lvl1', 'BACKGROUND1MASK.png')
         self.background = pygame.image.load(bg_path).convert()
-        background_no_mask_path = os.path.join('assets', 'backgrounds', 'BACKGROUND1.png')
+        background_no_mask_path = os.path.join('assets', 'backgrounds','lvl1', 'BACKGROUND1.png')
         self.background_no_mask = pygame.image.load(background_no_mask_path).convert()
 
 
