@@ -127,7 +127,7 @@ class Level2(Level):
 
         self.interacoes = [
             {
-                "rect": pygame.Rect(630, 300, 120, 100),
+                "rect": pygame.Rect(116, 744, 120, 100),
                 "tipo": "noctis",
                 "categoria": "mascara"
             },
@@ -167,7 +167,7 @@ class Level2(Level):
             screen.blit(surf, rect.topleft)
 
         self.player.draw(screen)
-        self.desenharEscuridao(screen)
+        #self.desenharEscuridao(screen)
 
     def desenharEscuridao(self, screen):
 

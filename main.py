@@ -12,8 +12,11 @@ CLOCK = pygame.time.Clock()
 
 running = True
 
-player = Player(0, HEIGHT/2)
+player = Player(0, HEIGHT/2 - 20)
 level = Level1(player)
+
+pygame.font.init()
+font = pygame.font.Font(None, 24)
 
 while running:
     for event in pygame.event.get():
@@ -24,15 +27,25 @@ while running:
     if player.proxima_fase:
         if player.proxima_fase == "fase2 - 1":
             level = Level2(player)
-            player.rect.topleft = (25, HEIGHT//2) 
+            player.hitbox.midbottom = (95, 423)
+
         elif player.proxima_fase == "fase1":
             level = Level1(player)
-            player.rect.topleft = (WIDTH - 150,HEIGHT//2)
+            player.hitbox.midbottom = (900, 423)
+
         elif player.proxima_fase == "fase3 - 1":
             pass
-        player.proxima_fase = None
+
+    # sincroniza sprite com hitbox
+    player.rect.midbottom = player.hitbox.midbottom
+    player.proxima_fase = None
+
 
     level.draw(SCREEN)
+    texto = f"x: {player.hitbox.x}  y: {player.hitbox.y}"
+    surface_texto = font.render(texto, True, (255, 255, 255))
+    SCREEN.blit(surface_texto, (10, 10))
+
 
     pygame.display.flip()
     CLOCK.tick(60)

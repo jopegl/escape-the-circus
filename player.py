@@ -1,6 +1,14 @@
 import pygame
 from settings import *
 
+def load_scaled(path, scale):
+    img = pygame.image.load(path).convert_alpha()
+    w, h = img.get_size()
+    return pygame.transform.scale(
+        img,
+        (int(w * scale), int(h * scale))
+    )
+
 class Player(pygame.sprite.Sprite):
     def __init__(self, x, y):
         pygame.sprite.Sprite.__init__(self)
@@ -18,17 +26,43 @@ class Player(pygame.sprite.Sprite):
         base_path = "assets/sprites/normal/"
 
         self.animations = {
-        'down':  [pygame.image.load(base_path + 'frente/frente.png').convert_alpha(), pygame.image.load(base_path + 'frente/frentepe1.png').convert_alpha(), pygame.image.load(base_path + 'frente/frentepe2.png').convert_alpha()],
-        'up':    [pygame.image.load(base_path + 'costas/costa.png').convert_alpha(), pygame.image.load(base_path + 'costas/costaspe1.png').convert_alpha(), pygame.image.load(base_path + 'costas/costaspe2.png').convert_alpha()],
-        'right': [pygame.image.load(base_path + 'direita/direita.png').convert_alpha(), pygame.image.load(base_path + 'direita/direitape1.png').convert_alpha(),    pygame.image.load(base_path + 'direita/direitape2.png').convert_alpha()],
-        'left':  [pygame.image.load(base_path + 'esquerda/esquerda.png').convert_alpha(), pygame.image.load(base_path + 'esquerda/esqpe1.png').convert_alpha(),    pygame.image.load(base_path + 'esquerda/esqpe2.png').convert_alpha()]
+            'down':  [
+                load_scaled(base_path + 'frente/frente.png', SPRITE_SCALE),
+                load_scaled(base_path + 'frente/frentepe1.png', SPRITE_SCALE),
+                load_scaled(base_path + 'frente/frentepe2.png', SPRITE_SCALE)
+            ],
+            'up': [
+                load_scaled(base_path + 'costas/costa.png', SPRITE_SCALE),
+                load_scaled(base_path + 'costas/costaspe1.png', SPRITE_SCALE),
+                load_scaled(base_path + 'costas/costaspe2.png', SPRITE_SCALE)
+            ],
+            'right': [
+                load_scaled(base_path + 'direita/direita.png', SPRITE_SCALE),
+                load_scaled(base_path + 'direita/direitape1.png', SPRITE_SCALE),
+                load_scaled(base_path + 'direita/direitape2.png', SPRITE_SCALE)
+            ],
+            'left': [
+                load_scaled(base_path + 'esquerda/esquerda.png', SPRITE_SCALE),
+                load_scaled(base_path + 'esquerda/esqpe1.png', SPRITE_SCALE),
+                load_scaled(base_path + 'esquerda/esqpe2.png', SPRITE_SCALE)
+            ]
         }
+
 
         self.status = 'down';
         self.frame_index = 0
 
         self.image = self.animations[self.status][int(self.frame_index)]
         self.rect = self.image.get_rect(topleft=(x, y))
+
+        # Hitbox só do tronco pra baixo
+        self.hitbox = pygame.Rect(
+            self.rect.x + self.rect.width * 0.2,   # margem esquerda
+            self.rect.y + self.rect.height * 0.45,  # começa abaixo da cabeça
+            self.rect.width * 0.6,                  # mais estreita
+            self.rect.height * 0.5                  # só parte inferior
+        )
+
 
 
     def update(self, walls, interacoes):
@@ -48,11 +82,14 @@ class Player(pygame.sprite.Sprite):
             dx = self.speed
             self.status = 'right'
 
-        self.rect.x += dx
-        self._collide(dx, 0, walls) 
+        self.hitbox.x += dx
+        self._collide(dx, 0, walls)
 
-        self.rect.y += dy
+        self.hitbox.y += dy
         self._collide(0, dy, walls)
+
+        self.rect.midbottom = self.hitbox.midbottom
+
 
         self.trocarMascara()
         self.manipularInteracoes(interacoes)
@@ -69,23 +106,23 @@ class Player(pygame.sprite.Sprite):
         else:
             self.frame_index = 0 # Volta para o frame inicial se parar
         
-        self.image = self.animations[self.status][int(self.frame_index)] 
+        self.image = self.animations[self.status][int(self.frame_index)]
 
-
-    def _collide(self,dx,dy,walls):
+    def _collide(self, dx, dy, walls):
         for wall in walls:
-            if self.rect.colliderect(wall):
-                if dx > 0:   # indo pra direita
-                    self.rect.right = wall.left
-                if dx < 0:   # esquerda
-                    self.rect.left = wall.right
-                if dy > 0:   # descendo
-                    self.rect.bottom = wall.top
-                if dy < 0:   # subindo
-                    self.rect.top = wall.bottom
+            if self.hitbox.colliderect(wall):
+                if dx > 0:
+                    self.hitbox.right = wall.left
+                if dx < 0:
+                    self.hitbox.left = wall.right
+                if dy > 0:
+                    self.hitbox.bottom = wall.top
+                if dy < 0:
+                    self.hitbox.top = wall.bottom
+
 
     def draw(self, screen):
-        pygame.draw.rect(screen, (200, 200, 200), self.rect)
+        screen.blit(self.image, self.rect)
 
     def manipularInteracoes(self, interacoes):
         keys = pygame.key.get_pressed()
