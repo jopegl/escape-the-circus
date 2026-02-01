@@ -108,6 +108,7 @@ class Level2(Level):
             (800, 520, 'V'),
             (600, 440, 'H'),
             (760, 240, 'V'),
+            (760, 480, 'H'),
         ]
 
 
@@ -129,8 +130,8 @@ class Level2(Level):
         self.interacoes = [
             # Máscara (faixa superior – centro)
             {
-                "rect": pygame.Rect(630, 200, 120, 100),
-                "tipo": "key",
+                "rect": pygame.Rect(630, 300, 120, 100),
+                "tipo": "noctis",
                 "categoria": "mascara"
             },
 
