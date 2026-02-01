@@ -14,6 +14,8 @@ class Player(pygame.sprite.Sprite):
     def __init__(self, x, y):
         pygame.sprite.Sprite.__init__(self)
 
+        self.ganhou = False
+
         self.speed = PLAYER_SPEED
         self.lista_mascaras = ["key", "noctis", "mizu"]
         self.mascaras_coletadas = {
@@ -163,7 +165,6 @@ class Player(pygame.sprite.Sprite):
 
         self.animate(dx != 0 or dy != 0)
 
-        aniamtion = self.animations[self.status]
 
     def animate(self, is_moving):
         if is_moving:
@@ -214,10 +215,15 @@ class Player(pygame.sprite.Sprite):
                 elif zona.get("categoria") == "porta":
                     self.proxima_fase = zona["tipo"]
                     print(f"Entrando na {zona['tipo']}...")
-
+                elif zona.get('categoria') == 'final':
+                    if keys[pygame.K_e]:
+                        if self.temKey() and self.mascara_equipada == 'key':
+                            self.ganhou = True
+ 
 
     def trocarMascara(self):
         keys = pygame.key.get_pressed()
+        mascara_anterior = self.mascara_equipada
 
         for i, nome in enumerate(self.lista_mascaras):
             if keys[pygame.K_1 + i]:
@@ -227,6 +233,17 @@ class Player(pygame.sprite.Sprite):
         
         if keys[pygame.K_4]:
             self.mascara_equipada = None
+
+        if self.mascara_equipada != mascara_anterior:
+            if 'down' in self.status:
+                self.status = 'down' if not self.mascara_equipada else f'down_{self.lista_mascaras.index(self.mascara_equipada)+1}'
+            elif 'up' in self.status:
+                self.status = 'up'
+            elif 'left' in self.status:
+                self.status = 'left' if not self.mascara_equipada else f'left_{self.lista_mascaras.index(self.mascara_equipada)+1}'
+            elif 'right' in self.status:
+                self.status = 'right' if not self.mascara_equipada else f'right_{self.lista_mascaras.index(self.mascara_equipada)+1}'
+
 
     
     def temKey(self):

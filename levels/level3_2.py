@@ -30,6 +30,11 @@ class Level3_2(Level):
                 "tipo": "final",
                 "categoria": "final"
             },
+            {
+                "rect": pygame.Rect(0, 360, 20, 140),
+                "tipo": "fase3-1-2",
+                "categoria": "porta"
+            },
         ]
 
 

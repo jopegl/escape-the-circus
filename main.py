@@ -49,6 +49,13 @@ while running:
             level = Level3_2(player)
             player.hitbox.midbottom = (95, 423)
             player.speed = 2
+        elif player.proxima_fase == 'fase3-1-2':
+            level = Level3_1(player)
+            player.hitbox.midbottom = (120, 423)
+            player.speed = PLAYER_SPEED
+
+    if player.ganhou:
+        running = False
 
     # sincroniza sprite com hitbox
     player.rect.midbottom = player.hitbox.midbottom
