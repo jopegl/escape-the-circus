@@ -6,6 +6,7 @@ from levels.level1 import Level1
 from levels.level2 import Level2
 from levels.level3_1 import Level3_1
 from levels.level3_2 import Level3_2
+from levels.ending import Ending
 pygame.init()
 
 SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -55,7 +56,7 @@ while running:
             player.speed = PLAYER_SPEED
             
     if player.ganhou:
-        level = ending(player)
+        level = Ending(SCREEN)
 
     # sincroniza sprite com hitbox
     player.rect.midbottom = player.hitbox.midbottom
