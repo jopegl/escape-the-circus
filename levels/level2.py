@@ -7,6 +7,15 @@ class Level2(Level):
     def __init__(self, player):
         super().__init__(player)
 
+        mask_path = os.path.join('assets', 'backgrounds', 'lvl2', 'mascaranotis.png')
+
+        self.mascara_mizu_img = pygame.image.load(mask_path).convert_alpha()
+
+        self.mascara_mizu_img = pygame.transform.scale(
+            self.mascara_mizu_img,
+            (100, 100)
+        )
+
         self.darkness = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA)
         self.darkness.fill((0, 0, 0, 220))
 
@@ -128,13 +137,18 @@ class Level2(Level):
         self.interacoes = [
             {
                 "rect": pygame.Rect(116, 744, 120, 100),
-                "tipo": "noctis",
+                "tipo": "mizu",
                 "categoria": "mascara"
             },
 
             {
                 "rect": pygame.Rect(0, 360, 20, 140),
                 "tipo": "fase1",
+                "categoria": "porta"
+            },
+            {
+                "rect": pygame.Rect(1051, 428, 20, 300),
+                "tipo": "fase3-1",
                 "categoria": "porta"
             },
         ]
@@ -162,12 +176,23 @@ class Level2(Level):
 
         for zona in self.interacoes:
             rect = zona["rect"]
+
+            # Define o rect da máscara Mizu
+            if zona["tipo"] == "mizu":
+                self.mascara_mizu_rect = rect
+
+                # Só desenha a máscara se o jogador ainda NÃO pegou
+                if not self.player.temMizu():
+                    screen.blit(self.mascara_mizu_img, self.mascara_mizu_rect.topleft)
+
+            # Desenha zonas de interação (opcional)
             surf = pygame.Surface((rect.width, rect.height), pygame.SRCALPHA)
             pygame.draw.rect(surf, (0, 0, 200, 100), surf.get_rect())
             screen.blit(surf, rect.topleft)
 
+
         self.player.draw(screen)
-        #self.desenharEscuridao(screen)
+        self.desenharEscuridao(screen)
 
     def desenharEscuridao(self, screen):
 

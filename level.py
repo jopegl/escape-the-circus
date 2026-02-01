@@ -8,12 +8,12 @@ class Level:
         self.interacoes = []
 
     def update(self):
-        self.player.update(self.walls, self.interacoes)
-    
-    def draw(self, screen):
-        screen.fill((0,0,0))
-        self.player.draw(screen)
-        for wall in self.walls:
-            pygame.draw.rect(screen, (0, 200, 0), wall)
+        # Lista de colisão
+        paredes_para_colisao = self.walls.copy()
 
-        
+        # Adiciona o bloqueador à colisão se existir e o jogador não tiver Mizu
+        if hasattr(self, "bloqueador") and self.player.mascara_equipada != 'mizu':
+            paredes_para_colisao.append(self.bloqueador)
+
+        self.player.update(paredes_para_colisao, self.interacoes)
+    
