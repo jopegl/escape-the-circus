@@ -14,6 +14,19 @@ class Player(pygame.sprite.Sprite):
     def __init__(self, x, y):
         pygame.sprite.Sprite.__init__(self)
 
+        self.collect_sound_path = os.path.join('assets', 'sounds', 'collect.mp3')
+        self.walk_sound_path = os.path.join('assets', 'sounds', 'steps.mp3')
+
+        self.collect_sound = pygame.mixer.Sound(self.collect_sound_path)
+        self.walk_sound = pygame.mixer.Sound(self.walk_sound_path)
+
+
+
+        self.collect_sound.set_volume(0.7)
+        self.walk_sound.set_volume(0.4)
+
+        self.walk_channel = pygame.mixer.Channel(1)
+
         self.ganhou = False
 
         self.speed = PLAYER_SPEED
@@ -164,6 +177,13 @@ class Player(pygame.sprite.Sprite):
         self.manipularInteracoes(interacoes)
 
         self.animate(dx != 0 or dy != 0)
+        is_moving = dx != 0 or dy != 0
+
+        if is_moving:
+            if not self.walk_channel.get_busy():
+                self.walk_channel.play(self.walk_sound, loops=-1)
+        else:
+            self.walk_channel.stop()
 
 
     def animate(self, is_moving):
@@ -203,6 +223,7 @@ class Player(pygame.sprite.Sprite):
                         tipo = zona["tipo"]
                         if not self.mascaras_coletadas[tipo]:
                             self.mascaras_coletadas[tipo] = True
+                            self.collect_sound.play()
                             print(f"Você pegou a máscara {tipo}!")
                             interacoes.remove(zona)
                             break  # pega apenas uma por aperto
@@ -210,6 +231,7 @@ class Player(pygame.sprite.Sprite):
                     if keys[pygame.K_e]:
                         if self.temKey() and self.mascara_equipada == 'key':
                             self.mascaras_coletadas[zona.get('recompensa')] = True
+                            self.collect_sound.play()
                             print("Você abriu o armário!")
                             interacoes.remove(zona)
                 elif zona.get("categoria") == "porta":

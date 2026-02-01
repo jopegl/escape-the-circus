@@ -11,11 +11,20 @@ from menu import menu
 import pygame_menu
 from utils import *
 import sys
+import os
+
 pygame.init()
+pygame.mixer.init()
 
 SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Escape The Circus")
 CLOCK = pygame.time.Clock()
+
+MUSIC_PATH = os.path.join('assets', 'sounds', 'mainsong.mp3')
+pygame.mixer.music.load(MUSIC_PATH)
+pygame.mixer.music.set_volume(0.4)  
+pygame.mixer.music.play(-1)  
+
 
 def start_game():
     player = Player(0, HEIGHT/2 - 20)
