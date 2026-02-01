@@ -26,7 +26,7 @@ class Level3_2(Level):
 
             # Porta / saída (parte de baixo – maleta)
             {
-                "rect": pygame.Rect(WIDTH - 90, 360, 120, 140),
+                "rect": pygame.Rect(691, 41, 250, 250),
                 "tipo": "final",
                 "categoria": "final"
             },
@@ -52,6 +52,8 @@ class Level3_2(Level):
         screen.blit(overlay, (0, 0))
 
         dark_overlay = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA)
+        dark_overlay.fill((0,0,0,120))
+        screen.blit(dark_overlay, (0,0))
 
         for wall in self.walls:
             surf = pygame.Surface((wall.width, wall.height), pygame.SRCALPHA)
