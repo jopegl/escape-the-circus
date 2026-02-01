@@ -24,9 +24,10 @@ while running:
     if player.proxima_fase:
         if player.proxima_fase == "fase2 - 1":
             level = Level2(player)
-            player.rect.topleft = (0, HEIGHT//2) 
+            player.rect.topleft = (25, HEIGHT//2) 
         elif player.proxima_fase == "fase1":
             level = Level1(player)
+            player.rect.topleft = (WIDTH - 150,HEIGHT//2)
         elif player.proxima_fase == "fase3 - 1":
             pass
         player.proxima_fase = None

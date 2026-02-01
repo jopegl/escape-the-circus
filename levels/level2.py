@@ -7,22 +7,29 @@ class Level2(Level):
     def __init__(self, player):
         super().__init__(player)
 
-        self.darkness = pygame.Surface((WIDTH, HEIGHT))
-        self.darkness.fill((0, 0, 0))
-        self.darkness.set_alpha(220)  # quão escuro
+        self.darkness = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA)
+        self.darkness.fill((0, 0, 0, 220))
 
-        self.light_radius = 120
+        self.light_radius = 100
         self.light = pygame.Surface(
             (self.light_radius * 2, self.light_radius * 2),
             pygame.SRCALPHA
         )
 
-        pygame.draw.circle(
-            self.light,
-            (0, 0, 0, 0),
-            (self.light_radius, self.light_radius),
-            self.light_radius
-        )
+        # Começa totalmente escuro
+        self.light.fill((0, 0, 0, 255))
+
+        # Desenha vários círculos, do maior pro menor
+        for r in range(self.light_radius, 0, -3):
+            alpha = int(255 * (r / self.light_radius))
+            pygame.draw.circle(
+                self.light,
+                (0, 0, 0, alpha),
+                (self.light_radius, self.light_radius),
+                r
+            )
+
+
 
 
         bg_path = os.path.join('assets', 'backgrounds','lvl2', 'BACKGROUND2.png')
@@ -54,15 +61,6 @@ class Level2(Level):
         # Lista para guardar apenas o visual do labirinto
         self.maze_sprites = []
 
-        # ==========================================================
-        # 2. O QUE FALTAVA: DEFINIR O LABIRINTO
-        # ==========================================================
-        # ==========================================================
-        # DEFINIÇÃO DE UM LABIRINTO REAL (Ziguezague)
-        # ==========================================================
-        # ==========================================================
-        # LABIRINTO DENSO (14 PAREDES)
-        # ==========================================================
         layout_labirinto = [
             (120, 480, 'V'),
             (120, 40, 'V'), 
@@ -128,18 +126,15 @@ class Level2(Level):
             self.maze_sprites.append((img, rect))
 
         self.interacoes = [
-            # Máscara (faixa superior – centro)
             {
                 "rect": pygame.Rect(630, 300, 120, 100),
                 "tipo": "noctis",
                 "categoria": "mascara"
             },
 
-
-            # Porta / saída (parte de baixo – maleta)
             {
-                "rect": pygame.Rect(WIDTH - 90, 360, 120, 140),
-                "tipo": "porta1",
+                "rect": pygame.Rect(0, 360, 20, 140),
+                "tipo": "fase1",
                 "categoria": "porta"
             },
         ]
@@ -151,49 +146,44 @@ class Level2(Level):
     def draw(self, screen):
         screen.blit(self.background, (0, 0))
 
-        # --- 1. O QUE FALTOU: Desenhar as paredes bonitas (Sprites) ---
         for img, rect in self.maze_sprites:
             screen.blit(img, rect.topleft)
 
-        # --- 2. Desenhar as bordas invisíveis (Debug Verde) ---
-        # Aqui fazemos uma verificação: só desenha o quadrado verde 
-        # se a parede NÃO for uma das paredes do labirinto (sprites).
         for wall in self.walls:
             eh_sprite = False
-            # Procura se esse 'wall' existe na lista de sprites
             for img, sprite_rect in self.maze_sprites:
                 if wall == sprite_rect:
                     eh_sprite = True
                     break
-            
-            # Se não é sprite (ou seja, é uma borda invisível), desenha o verde
             if not eh_sprite:
                 surf = pygame.Surface((wall.width, wall.height), pygame.SRCALPHA)
                 pygame.draw.rect(surf, (0, 200, 0, 100), surf.get_rect())
                 screen.blit(surf, wall.topleft)
 
-        # --- 3. Desenhar Interações ---
         for zona in self.interacoes:
             rect = zona["rect"]
             surf = pygame.Surface((rect.width, rect.height), pygame.SRCALPHA)
             pygame.draw.rect(surf, (0, 0, 200, 100), surf.get_rect())
             screen.blit(surf, rect.topleft)
 
-        # desenha escuridão
-        #if self.player.mascara_equipada == "noctis":
-         #   darkness = self.darkness.copy()
-
-          #  lx = self.player.rect.centerx - self.light_radius
-           # ly = self.player.rect.centery - self.light_radius
-
-            #darkness.blit(
-              #  self.light,
-             #   (lx, ly),
-               # special_flags=pygame.BLEND_RGBA_SUB
-            #)
-
-            #screen.blit(darkness, (0, 0))
-        #else:
-         #   screen.blit(self.darkness, (0, 0))
         self.player.draw(screen)
+        self.desenharEscuridao(screen)
+
+    def desenharEscuridao(self, screen):
+
+        if self.player.mascara_equipada == "noctis":
+            darkness = self.darkness.copy()
+
+            lx = self.player.rect.centerx - self.light_radius
+            ly = self.player.rect.centery - self.light_radius
+
+            darkness.blit(
+                self.light,
+                (lx, ly),
+                special_flags=pygame.BLEND_RGBA_MIN
+            )
+
+            screen.blit(darkness, (0, 0))
+        else:
+            screen.blit(self.darkness, (0, 0))
 
