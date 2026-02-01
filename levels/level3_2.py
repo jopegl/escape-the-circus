@@ -16,7 +16,8 @@ class Level3_2(Level):
             pygame.Rect(0, HEIGHT - 1, WIDTH, 1),  
 
 
-            pygame.Rect(0, 0, 1, HEIGHT),  
+            pygame.Rect(0, 60, 120, 300),  
+            pygame.Rect(0, 500, 120, 300),
 
             pygame.Rect(WIDTH - 1, 0, 1, HEIGHT)
 
@@ -57,13 +58,13 @@ class Level3_2(Level):
 
         for wall in self.walls:
             surf = pygame.Surface((wall.width, wall.height), pygame.SRCALPHA)
-            pygame.draw.rect(surf, (0, 200, 0, 100), surf.get_rect())
+            pygame.draw.rect(surf, (0, 0, 0, 0), surf.get_rect())
             screen.blit(surf, wall.topleft)
 
         for zona in self.interacoes:
             rect = zona["rect"]
             surf = pygame.Surface((rect.width, rect.height), pygame.SRCALPHA)
-            pygame.draw.rect(surf, (0, 0, 200, 100), surf.get_rect())
+            pygame.draw.rect(surf, (0, 0, 0, 0), surf.get_rect())
             screen.blit(surf, rect.topleft)
 
         self.player.draw(screen)

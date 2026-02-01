@@ -17,9 +17,9 @@ class Level2(Level):
         )
 
         self.darkness = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA)
-        self.darkness.fill((0, 0, 0, 220))
+        self.darkness.fill((0, 0, 0, 245))
 
-        self.light_radius = 100
+        self.light_radius = 125
         self.light = pygame.Surface(
             (self.light_radius * 2, self.light_radius * 2),
             pygame.SRCALPHA
@@ -171,7 +171,7 @@ class Level2(Level):
                     break
             if not eh_sprite:
                 surf = pygame.Surface((wall.width, wall.height), pygame.SRCALPHA)
-                pygame.draw.rect(surf, (0, 200, 0, 100), surf.get_rect())
+                pygame.draw.rect(surf, (0, 0, 0, 0), surf.get_rect())
                 screen.blit(surf, wall.topleft)
 
         for zona in self.interacoes:
@@ -187,7 +187,7 @@ class Level2(Level):
 
             # Desenha zonas de interação (opcional)
             surf = pygame.Surface((rect.width, rect.height), pygame.SRCALPHA)
-            pygame.draw.rect(surf, (0, 0, 200, 100), surf.get_rect())
+            pygame.draw.rect(surf, (0, 0, 0, 0), surf.get_rect())
             screen.blit(surf, rect.topleft)
 
 

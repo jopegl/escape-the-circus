@@ -72,25 +72,25 @@ class Level3_1(Level):
         
         for wall in self.walls:
             surf = pygame.Surface((wall.width, wall.height), pygame.SRCALPHA)
-            pygame.draw.rect(surf, (0, 200, 0, 100), surf.get_rect())
+            pygame.draw.rect(surf, (0, 0, 0, 0), surf.get_rect())
             screen.blit(surf, wall.topleft)
 
         for zona in self.interacoes:
             rect = zona["rect"]
             surf = pygame.Surface((rect.width, rect.height), pygame.SRCALPHA)
-            pygame.draw.rect(surf, (0, 0, 200, 100), surf.get_rect())
+            pygame.draw.rect(surf, (0, 0, 0, 0), surf.get_rect())
             screen.blit(surf, rect.topleft)
 
         if hasattr(self, "bloqueador") and getattr(self, "desenhar_bloqueador", False):
             if self.player.mascara_equipada != 'mizu':
                 surf = pygame.Surface((self.bloqueador.width, self.bloqueador.height), pygame.SRCALPHA)
-                pygame.draw.rect(surf, (0, 200, 0, 100), surf.get_rect())  # sombra verde
+                pygame.draw.rect(surf, (0, 0, 0, 0), surf.get_rect())  
                 screen.blit(surf, self.bloqueador.topleft)
 
         self.player.draw(screen)
 
         if self.mostrar_mensagem:
-            text_surf = self.font.render(self.mensagem_bloqueador, True, (255, 255, 255))  # branco
+            text_surf = self.font.render(self.mensagem_bloqueador, True, (255, 255, 255))  
 
             bg_surf = pygame.Surface((text_surf.get_width()+20, text_surf.get_height()+10), pygame.SRCALPHA)
             bg_surf.fill((0, 0, 0, 180))
