@@ -46,8 +46,10 @@ class Level2(Level):
         
         # Imagem Horizontal
         self.wall_img_h = pygame.image.load(barra_path).convert_alpha()
+        self.wall_img_h = pygame.transform.scale(self.wall_img_h, (200, 10))
         # Imagem Vertical (rotacionada)
         self.wall_img_v = pygame.transform.rotate(self.wall_img_h, 90)
+        self.wall_img_v = pygame.transform.scale(self.wall_img_v, (10, 200))
 
         # Lista para guardar apenas o visual do labirinto
         self.maze_sprites = []
@@ -62,75 +64,50 @@ class Level2(Level):
         # LABIRINTO DENSO (14 PAREDES)
         # ==========================================================
         layout_labirinto = [
-
-            # ===============================
-            # ZONA ESQUERDA — INÍCIO
-            # ===============================
-
-            # Entrada bloqueada → força descer
-            (220, 50, 'V'),
-
-            # Cria corredor inicial
-            (80, 380, 'H'),
-            (380, 150, 'V'),
-
-            # Beco sem saída à esquerda
-            (120, 200, 'V'),
-            (120, 300, 'H'),
-
-            # ===============================
-            # ZONA CENTRAL — MÁSCARA
-            # ===============================
-
-            # Caixa da máscara (proteção em volta)
-            (500, 120, 'H'),   # teto
-            (480, 320, 'H'),   # chão
-            (550, 160, 'V'),   # esquerda
-            (700, 160, 'V'),   # direita
-
-            # Entrada obrigatória por baixo
-            (600, 360, 'H'),
-
-            # Falso caminho acima da máscara
-            (600, 60, 'H'),
-            (750, 60, 'V'),
-
-            # ===============================
-            # ZONA INFERIOR — ESGOTO
-            # ===============================
-
-            # Corredor apertado
-            (150, 550, 'H'),
-            (400, 500, 'V'),
-
-            # Labirinto em zigue-zague
-            (300, 720, 'H'),
-            (500, 650, 'V'),
-            (350, 650, 'H'),
-            (350, 600, 'V'),
-
-            # Beco sem saída inferior
-            (200, 680, 'V'),
-            (200, 760, 'H'),
-
-            # ===============================
-            # ZONA DIREITA — SAÍDA
-            # ===============================
-
-            # Bloqueia acesso direto por cima
-            (850, 50, 'V'),
-            (820, 250, 'H'),
-
-            # Proteção inferior da porta
-            (880, 500, 'V'),
-            (650, 600, 'H'),
-
-            # Curva final obrigatória
-            (720, 650, 'V'),
-            (760, 700, 'H'),
-
-            # Último desvio antes da porta
-            (820, 620, 'V'),
+            (120, 480, 'V'),
+            (120, 40, 'V'), 
+            (120, 0, 'V'),  
+            (120, 640, 'V'),
+            (120, 760, 'V'),
+            (120, 0, 'H'),  
+            (400, 0, 'H'),  
+            (360, 0, 'H'),  
+            (320, 0, 'H'),  
+            (640, 0, 'H'),  
+            (600, 0, 'H'),  
+            (680, 0, 'H'),  
+            (880, 0, 'V'),  
+            (880, 160, 'V'),
+            (880, 480, 'V'),
+            (880, 680, 'V'),
+            (120, 760, 'V'),
+            (120, 760, 'V'),
+            (120, 480, 'H'),
+            (240, 280, 'V'),
+            (240, 160, 'H'),
+            (360, 160, 'V'),
+            (360, 360, 'H'),
+            (480, 240, 'H'),
+            (680, 40, 'V'),
+            (680, 0, 'V'),
+            (360, 80, 'V'),
+            (240, 80, 'H'),
+            (400, 160, 'H'),
+            (400, 80, 'H'),
+            (440, 320, 'V'),
+            (440, 440, 'H'),
+            (640, 440, 'V'),
+            (520, 520, 'H'),
+            (520, 520, 'V'),
+            (200, 600, 'V'),
+            (240, 600, 'H'),
+            (200, 600, 'H'),
+            (200, 680, 'H'),
+            (240, 680, 'H'),
+            (680, 720, 'H'),
+            (800, 520, 'V'),
+            (600, 440, 'H'),
+            (760, 240, 'V'),
         ]
 
 
@@ -138,10 +115,10 @@ class Level2(Level):
         for x, y, orientacao in layout_labirinto:
             if orientacao == 'H':
                 img = self.wall_img_h
-                rect = pygame.Rect(x, y, 300, 30) # W=300, H=30
+                rect = pygame.Rect(x, y, 200, 10) # W=300, H=30
             else:
                 img = self.wall_img_v
-                rect = pygame.Rect(x, y, 30, 300) # W=30, H=300
+                rect = pygame.Rect(x, y, 10, 200) # W=30, H=300
 
             # Adiciona colisão física (Player usa isso)
             self.walls.append(rect)
@@ -165,8 +142,6 @@ class Level2(Level):
                 "categoria": "porta"
             },
         ]
-
-
 
         self.background = pygame.transform.scale(
             self.background, (WIDTH, HEIGHT)
