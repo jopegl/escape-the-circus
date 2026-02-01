@@ -53,9 +53,9 @@ while running:
             level = Level3_1(player)
             player.hitbox.midbottom = (120, 423)
             player.speed = PLAYER_SPEED
-
+            
     if player.ganhou:
-        running = False
+        level = ending(player)
 
     # sincroniza sprite com hitbox
     player.rect.midbottom = player.hitbox.midbottom
@@ -71,5 +71,6 @@ while running:
     pygame.display.flip()
     CLOCK.tick(60)
 
+menu(screen, start_the_game)
 pygame.quit()
 sys.exit()
