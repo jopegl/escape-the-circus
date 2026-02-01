@@ -1,4 +1,5 @@
 import pygame
+import os
 from settings import *
 
 def load_scaled(path, scale):
@@ -23,31 +24,76 @@ class Player(pygame.sprite.Sprite):
         self.mascara_equipada = None
         self.proxima_fase = None
 
-        base_path = "assets/sprites/normal/"
+        base_path = os.path.join("assets", "sprites", "normal")
+        mask_path = os.path.join("assets", "sprites", "masked")
 
         self.animations = {
-            'down':  [
-                load_scaled(base_path + 'frente/frente.png', SPRITE_SCALE),
-                load_scaled(base_path + 'frente/frentepe1.png', SPRITE_SCALE),
-                load_scaled(base_path + 'frente/frentepe2.png', SPRITE_SCALE)
+            'down': [
+                load_scaled(os.path.join(base_path, "frente", "frente.png"), SPRITE_SCALE),
+                load_scaled(os.path.join(base_path, "frente", "frentepe1.png"), SPRITE_SCALE),
+                load_scaled(os.path.join(base_path, "frente", "frentepe2.png"), SPRITE_SCALE)
+            ],
+            'down_1': [
+                load_scaled(os.path.join(mask_path, "frente", "frente2mask1.png"), SPRITE_SCALE),
+                load_scaled(os.path.join(mask_path, "frente", "frente1mask1.png"), SPRITE_SCALE),
+                load_scaled(os.path.join(mask_path, "frente", "frente3mask1.png"), SPRITE_SCALE)
+            ],
+            'down_2': [
+                load_scaled(os.path.join(mask_path, "frente", "frente2mask2.png"), SPRITE_SCALE),
+                load_scaled(os.path.join(mask_path, "frente", "frente1mask2.png"), SPRITE_SCALE),
+                load_scaled(os.path.join(mask_path, "frente", "frente3mask2.png"), SPRITE_SCALE)
+            ],
+            'down_3': [
+                load_scaled(os.path.join(mask_path, "frente", "frente2mask3.png"), SPRITE_SCALE),
+                load_scaled(os.path.join(mask_path, "frente", "frente1mask3.png"), SPRITE_SCALE),
+                load_scaled(os.path.join(mask_path, "frente", "frente3mask3.png"), SPRITE_SCALE)
             ],
             'up': [
-                load_scaled(base_path + 'costas/costa.png', SPRITE_SCALE),
-                load_scaled(base_path + 'costas/costaspe1.png', SPRITE_SCALE),
-                load_scaled(base_path + 'costas/costaspe2.png', SPRITE_SCALE)
+                load_scaled(os.path.join(base_path, "costas", "costa.png"), SPRITE_SCALE),
+                load_scaled(os.path.join(base_path, "costas", "costaspe1.png"), SPRITE_SCALE),
+                load_scaled(os.path.join(base_path, "costas", "costaspe2.png"), SPRITE_SCALE)
             ],
             'right': [
-                load_scaled(base_path + 'direita/direita.png', SPRITE_SCALE),
-                load_scaled(base_path + 'direita/direitape1.png', SPRITE_SCALE),
-                load_scaled(base_path + 'direita/direitape2.png', SPRITE_SCALE)
+                load_scaled(os.path.join(base_path, "direita", "direita.png"), SPRITE_SCALE),
+                load_scaled(os.path.join(base_path, "direita", "direitape1.png"), SPRITE_SCALE),
+                load_scaled(os.path.join(base_path, "direita", "direitape2.png"), SPRITE_SCALE)
+            ],
+            'right_1': [
+                load_scaled(os.path.join(mask_path, "direita", "direita2mask1.png"), SPRITE_SCALE),
+                load_scaled(os.path.join(mask_path, "direita", "direita1mask1.png"), SPRITE_SCALE),
+                load_scaled(os.path.join(mask_path, "direita", "direita3mask1.png"), SPRITE_SCALE)
+            ],
+            'right_2': [
+                load_scaled(os.path.join(mask_path, "direita", "direita2mask2.png"), SPRITE_SCALE),
+                load_scaled(os.path.join(mask_path, "direita", "direita1mask2.png"), SPRITE_SCALE),
+                load_scaled(os.path.join(mask_path, "direita", "direita3mask2.png"), SPRITE_SCALE)
+            ],
+            'right_3': [
+                load_scaled(os.path.join(mask_path, "direita", "direita2mask3.png"), SPRITE_SCALE),
+                load_scaled(os.path.join(mask_path, "direita", "direita1mask3.png"), SPRITE_SCALE),
+                load_scaled(os.path.join(mask_path, "direita", "direita3mask3.png"), SPRITE_SCALE)
             ],
             'left': [
-                load_scaled(base_path + 'esquerda/esquerda.png', SPRITE_SCALE),
-                load_scaled(base_path + 'esquerda/esqpe1.png', SPRITE_SCALE),
-                load_scaled(base_path + 'esquerda/esqpe2.png', SPRITE_SCALE)
+                load_scaled(os.path.join(base_path, "esquerda", "esquerda.png"), SPRITE_SCALE),
+                load_scaled(os.path.join(base_path, "esquerda", "esqpe1.png"), SPRITE_SCALE),
+                load_scaled(os.path.join(base_path, "esquerda", "esqpe2.png"), SPRITE_SCALE)
+            ],
+            'left_1': [
+                load_scaled(os.path.join(mask_path, "esquerda", "esq2mask1.png"), SPRITE_SCALE),
+                load_scaled(os.path.join(mask_path, "esquerda", "esq1mask1.png"), SPRITE_SCALE),
+                load_scaled(os.path.join(mask_path, "esquerda", "esq3mask1.png"), SPRITE_SCALE)
+            ],
+            'left_2': [
+                load_scaled(os.path.join(mask_path, "esquerda", "esq2mask2.png"), SPRITE_SCALE),
+                load_scaled(os.path.join(mask_path, "esquerda", "esq1mask2.png"), SPRITE_SCALE),
+                load_scaled(os.path.join(mask_path, "esquerda", "esq3mask2.png"), SPRITE_SCALE)
+            ],
+            'left_3': [
+                load_scaled(os.path.join(mask_path, "esquerda", "esq2mask3.png"), SPRITE_SCALE),
+                load_scaled(os.path.join(mask_path, "esquerda", "esq1mask3.png"), SPRITE_SCALE),
+                load_scaled(os.path.join(mask_path, "esquerda", "esq3mask3.png"), SPRITE_SCALE)
             ]
         }
-
 
         self.status = 'down';
         self.frame_index = 0
@@ -63,24 +109,46 @@ class Player(pygame.sprite.Sprite):
             self.rect.height * 0.5                  # só parte inferior
         )
 
-
-
     def update(self, walls, interacoes):
         keys = pygame.key.get_pressed()
         dx = dy = 0
 
-        if keys[pygame.K_w]: 
+        if keys[pygame.K_w]:
             dy = -self.speed
             self.status = 'up'
+
         elif keys[pygame.K_s]: 
             dy = self.speed
-            self.status = 'down'
+            if self.mascara_equipada == 'key':
+                self.status = 'down_1'
+            elif self.mascara_equipada == 'noctis':
+                self.status = 'down_2'
+            elif self.mascara_equipada == 'mizu':
+                self.status = 'down_3'
+            else:
+                self.status = 'down'
+
         if keys[pygame.K_a]: 
             dx = -self.speed
-            self.status = 'left'
+            if self.mascara_equipada == 'key':
+                self.status = 'left_1'
+            elif self.mascara_equipada == 'noctis':
+                self.status = 'left_2'
+            elif self.mascara_equipada == 'mizu':
+                self.status = 'left_3'
+            else:
+                self.status = 'left'
+
         elif keys[pygame.K_d]: 
             dx = self.speed
-            self.status = 'right'
+            if self.mascara_equipada == 'key':
+                self.status = 'right_1'
+            elif self.mascara_equipada == 'noctis':
+                self.status = 'right_2'
+            elif self.mascara_equipada == 'mizu':
+                self.status = 'right_3'
+            else:
+                self.status = 'right'
 
         self.hitbox.x += dx
         self._collide(dx, 0, walls)
@@ -89,7 +157,6 @@ class Player(pygame.sprite.Sprite):
         self._collide(0, dy, walls)
 
         self.rect.midbottom = self.hitbox.midbottom
-
 
         self.trocarMascara()
         self.manipularInteracoes(interacoes)
