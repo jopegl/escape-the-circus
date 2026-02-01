@@ -7,7 +7,7 @@ class Level3_1(Level):
     def __init__(self, player):
         super().__init__(player)
 
-        bg_path = os.path.join('assets', 'backgrounds','lvl3', 'fase3.png')
+        bg_path = os.path.join('assets', 'backgrounds','lvl3', 'PREBACKGROUND3.png')
         self.background = pygame.image.load(bg_path).convert()
         self.bloqueador = pygame.Rect(420, 0, 30, HEIGHT)
         self.desenhar_bloqueador = True

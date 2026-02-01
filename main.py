@@ -5,6 +5,7 @@ from player import Player
 from levels.level1 import Level1
 from levels.level2 import Level2
 from levels.level3_1 import Level3_1
+from levels.level3_2 import Level3_2
 pygame.init()
 
 SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -29,18 +30,25 @@ while running:
         if player.proxima_fase == "fase2 - 1":
             level = Level2(player)
             player.hitbox.midbottom = (95, 423)
+            player.speed = PLAYER_SPEED
 
         elif player.proxima_fase == "fase1":
             level = Level1(player)
             player.hitbox.midbottom = (900, 423)
+            player.speed = PLAYER_SPEED
 
         elif player.proxima_fase == "fase3-1":
             level = Level3_1(player)
             player.hitbox.midbottom = (95, 423)
+            player.speed = PLAYER_SPEED
         elif player.proxima_fase == "fase2-2":
             level = Level2(player)
             player.hitbox.midbottom = (900, 423)
-
+            player.speed = PLAYER_SPEED
+        elif player.proxima_fase == "fase3-2":
+            level = Level3_2(player)
+            player.hitbox.midbottom = (95, 423)
+            player.speed = 2
 
     # sincroniza sprite com hitbox
     player.rect.midbottom = player.hitbox.midbottom

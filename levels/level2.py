@@ -7,7 +7,7 @@ class Level2(Level):
     def __init__(self, player):
         super().__init__(player)
 
-        mask_path = os.path.join('assets', 'backgrounds', 'lvl2', 'mascaranotis.png')
+        mask_path = os.path.join('assets', 'backgrounds', 'lvl2', 'maskmizu.png')
 
         self.mascara_mizu_img = pygame.image.load(mask_path).convert_alpha()
 
