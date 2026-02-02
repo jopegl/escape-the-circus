@@ -17,7 +17,7 @@ class Level2(Level):
         )
 
         self.darkness = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA)
-        self.darkness.fill((0, 0, 0, 245))
+        self.darkness.fill((0, 0, 0,255))
 
         self.light_radius = 125
         self.light = pygame.Surface(
